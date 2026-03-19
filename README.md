@@ -1,3 +1,5 @@
+# Next.js / MongoDB Atlas  
+  
 YouTube:  
 [How to use mongodb database in nextjs](https://www.youtube.com/watch?v=l5dMurZaNJQ)  
 HarmonyCodes  
@@ -28,6 +30,7 @@ MONGODB_NAME = "testing-nextjs"
 in root dir, create /lib folder    
 create file: lib/mongodb.js  
   
+```  
 import mongoose from 'mongoose'  
 const mongodbUri = process.env.MONGODB_URI  
 const mongodbName = process.env.MONGODB_NAME  
@@ -39,14 +42,17 @@ export default async function connectDB(){
     console.log(err)  
   }  
 }  
+```
   
 in root dir, create file instrumentation.js  
   
+```  
 import connectDB from './lib/mongodb.js'  
 export function register(){  
     connectDB()  
 }  
-  
+```
+
 update the next.config.mjs file  
 below  
 /* config options here */  
@@ -59,7 +65,7 @@ $ npm run dev
   
 in root dir, create /models folder  
 create file /models/product.js  
-  
+```  
 import {model,models,Schema} from 'mongoose'  
 const ProductSchema = new Schema({  
   name:{  
@@ -72,9 +78,9 @@ const ProductSchema = new Schema({
   }  
 })  
 export const Product = models.Product || model("Product",ProductSchema)  
-  
+```  
 inside the app directory, create a file /api/product/route.js  
-  
+```  
 import {NextRequest,NextResponse} from 'next/server'  
 import {Product} from '@/models/product.js'  
 export async function GET(){  
@@ -99,23 +105,27 @@ export async function POST(req){
     console.log(err)  
   }  
 }  
-  
+```  
 VS Code Extension: Thunder Client  
 click New Request  
 change GET to POST  
 change URL to http://localhost:****/api/product  
 Body > JSON  
+```
 {  
     "name":"Orange",  
     "price":"400"  
 }  
+```
 click Send  
   
 check MongoDB Atlas to confirm  
+```
 {  
     "name":"Mango",  
     "price":"300"  
 }  
+```
 click Send  
 check MongoDB Atlas to confirm  
   
